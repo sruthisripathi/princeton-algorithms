@@ -6,6 +6,13 @@ class UF {
         int N;
         int *connections;
 
+        int _getRoot(int p) {
+            while(p != connections[p]) {
+                p = connections[p];
+            }
+            return p;
+        }
+
     public:
         // Parametrized constructor
         UF(int n) {
@@ -20,6 +27,10 @@ class UF {
             return connections[p] == connections[q];
         }
 
+        bool isConnectedQuickUnion(int p, int q) {
+            return _getRoot(p) == _getRoot(q);
+        }
+
         void quickFind(int p, int q) {
             // Eager algorithm
             int label_p = connections[p];
@@ -31,10 +42,12 @@ class UF {
             }
         }
 
-        // void quickUnion(int p, int q) {
-        //     // Lazy approach
-        //     connections[q] = p;
-        // }
+        void quickUnion(int p, int q) {
+            // Lazy approach
+            int p_root = _getRoot(p); 
+            int q_root = _getRoot(q);
+            connections[p_root] = q_root; 
+        }
 
         void printConnectedComponents() {
             cout << "Connections:" << endl;
@@ -64,8 +77,8 @@ int main() {
             break;
         }
         cin >> q;
-        if (!uf.isConnected(p, q)) {
-            uf.quickFind(p, q);
+        if (!uf.isConnectedQuickUnion(p, q)) {
+            uf.quickUnion(p, q);
             cout << "Formed connection: " << p << " <-> " << q << endl;
         }
     }
