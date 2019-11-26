@@ -5,6 +5,7 @@ class UF {
     private:
         int N;
         int *connections;
+        int *sz;
 
         int _getRoot(int p) {
             while(p != connections[p]) {
@@ -20,6 +21,10 @@ class UF {
             connections = (int*) calloc(sizeof(int), n);
             for(int i = 0; i<n; i++) {
                 connections[i] = i;
+            }
+            sz = (int*) calloc(sizeof(int), n);
+            for(int i = 0; i<n; i++) {
+                sz[i] = 1;
             }
         }
 
@@ -46,17 +51,29 @@ class UF {
             // Lazy approach
             int p_root = _getRoot(p); 
             int q_root = _getRoot(q);
-            connections[p_root] = q_root; 
+            if(sz[p_root] < sz[q_root]) {
+                connections[p_root] = q_root;
+                sz[q_root] += sz[p_root];
+            } else {
+                connections[q_root] = p_root;
+                sz[p_root] += sz[q_root];
+            }
         }
 
         void printConnectedComponents() {
+            cout << "Indices:" << endl;
+            for (int i = 0; i < N; i++) {
+                cout << i << " ";
+            }
+            cout << endl;
             cout << "Connections:" << endl;
             for (int i = 0; i < N; i++) {
                 cout << connections[i] << " ";
             }
             cout << endl;
+            cout << "Sizes:" << endl;
             for (int i = 0; i < N; i++) {
-                cout << i << " ";
+                cout << sz[i] << " ";
             }
             cout << endl;
         }
@@ -71,6 +88,7 @@ int main() {
     int i = 0;
     int p, q;
     cout << "Enter pairs of objects representing connections (Enter -1 when you are done)" << endl;
+    cout << "Enter conection: ";
     while (cin >> p)
     {
         if (p == -1) {
@@ -81,6 +99,8 @@ int main() {
             uf.quickUnion(p, q);
             cout << "Formed connection: " << p << " <-> " << q << endl;
         }
+        uf.printConnectedComponents();
+        cout << "Enter conection: ";
     }
 
     uf.printConnectedComponents();
