@@ -9,6 +9,8 @@ class UF {
 
         int _getRoot(int p) {
             while(p != connections[p]) {
+                // Path compression
+                connections[p] = connections[connections[p]];
                 p = connections[p];
             }
             return p;
@@ -51,6 +53,7 @@ class UF {
             // Lazy approach
             int p_root = _getRoot(p); 
             int q_root = _getRoot(q);
+            // Weighted quick union
             if(sz[p_root] < sz[q_root]) {
                 connections[p_root] = q_root;
                 sz[q_root] += sz[p_root];
