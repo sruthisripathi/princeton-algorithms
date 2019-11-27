@@ -9,45 +9,11 @@ the four elements in the connected components.
 #include "../union-find.h"
 #include "../../queue/queue.h"
 
-class UFMaxFind : public UF {
-    public:
-        UFMaxFind(int n):UF(n) {}
-
-        int find(int i) {
-            int root = UF::_getRoot(i);
-            std::cout << "Root of given node:" << root << std::endl;
-            int max = root;
-            Queue q = Queue();
-            q.enqueue(root);
-            std::cout << "Enque node" << std::endl;
-            q.printQueue();
-            while (q.getSize())
-            {
-                int node = q.dequeue();
-                std::cout << "Deque node" << std::endl;
-                q.printQueue();
-                if(node > max) {
-                    max = node;
-                }
-                for(int i=0; i < UF::N; i++) {
-                    int currNode = UF::connections[i];
-                    if(currNode == node && i != node) {
-                        q.enqueue(i);
-                        std::cout << "Enque node" << std::endl;
-                        q.printQueue();
-                    }
-                }
-            }
-            
-            return max;
-        }
-};
-
 int main() {
     int N;
     std::cout << "Enter the number of objects" << std::endl;
     std::cin >> N;
-    UFMaxFind uf = UFMaxFind(N);
+    UF uf = UF(N);
 
     int i = 0;
     int p, q;
@@ -59,7 +25,7 @@ int main() {
             break;
         }
         std::cin >> q;
-        if (!uf.isConnectedQuickUnion(p, q)) {
+        if (!uf.find(p, q)) {
             uf.quickUnion(p, q);
             std::cout << "Formed connection: " << p << " <-> " << q << std::endl;
         }
@@ -68,8 +34,11 @@ int main() {
     }
 
     uf.printConnectedComponents();
-    std::cout << "Finding MAX..." << std::endl;
-    int max = uf.find(3);
+    std::cout << "Finding MAX for 3..." << std::endl;
+    int max = uf.findMax(3);
+    std::cout << "Max: " << max << std::endl;
+    std::cout << "Finding MAX for 5..." << std::endl;
+    max = uf.findMax(5);
     std::cout << "Max: " << max << std::endl;
     
     return 0;

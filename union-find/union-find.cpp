@@ -16,7 +16,7 @@ int main() {
             break;
         }
         std::cin >> q;
-        if (!uf.isConnectedQuickUnion(p, q)) {
+        if (!uf.find(p, q)) {
             uf.quickUnion(p, q);
             std::cout << "Formed connection: " << p << " <-> " << q << std::endl;
         }

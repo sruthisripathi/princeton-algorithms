@@ -6,27 +6,13 @@ the log file is sorted by timestamp and that friendship is an equivalence relati
 algorithm should be mlogn or better and use extra space proportional to n.
 */
 
-#include "../union-find.h";
-
-class SocialNetwork : public UF {
-    public:
-        SocialNetwork(int n):UF(n) {}
-
-        bool isConnectedGraph() {
-            int root = UF::_getRoot(0);
-            for(int i=1; i < UF::N; i++) {
-                int i_root = UF::_getRoot(i);
-                if(i_root != root) return false;
-            }
-            return true;
-        }
-};
+#include "../union-find.h"
 
 int main() {
     int N;
     std::cout << "Enter the number of objects" << std::endl;
     std::cin >> N;
-    SocialNetwork uf = SocialNetwork(N);
+    UF uf = UF(N);
 
     int i = 0;
     int p, q;
@@ -38,7 +24,7 @@ int main() {
             break;
         }
         std::cin >> q;
-        if (!uf.isConnectedQuickUnion(p, q)) {
+        if (!uf.find(p, q)) {
             uf.quickUnion(p, q);
             std::cout << "Formed connection: " << p << " <-> " << q << std::endl;
         }

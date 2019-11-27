@@ -5,6 +5,8 @@ class UF {
         int N;
         int *connections;
         int *sz;
+        int *maxObj;
+        int numComponents;
 
         int _getRoot(int p) {
             while(p != connections[p]) {
@@ -18,22 +20,32 @@ class UF {
     public:
         // Parametrized constructor
         UF(int n) {
-            N = n;
+            N = numComponents = n;
             connections = (int*) calloc(sizeof(int), n);
-            for(int i = 0; i<n; i++) {
-                connections[i] = i;
-            }
+            maxObj = (int*) calloc(sizeof(int), n);
             sz = (int*) calloc(sizeof(int), n);
             for(int i = 0; i<n; i++) {
+                connections[i] = i;
                 sz[i] = 1;
-            }
+                maxObj[i] = i;
+            } 
+        }
+
+        int findMax(int i) {
+            int root = _getRoot(i);
+            return maxObj[root];
+        }
+
+        int isConnectedGraph() {
+            std::cout << "No of components: " << numComponents << std::endl;
+            return numComponents == 1;
         }
 
         bool isConnected(int p, int q) {
             return connections[p] == connections[q];
         }
 
-        bool isConnectedQuickUnion(int p, int q) {
+        bool find(int p, int q) {
             return _getRoot(p) == _getRoot(q);
         }
 
@@ -52,14 +64,18 @@ class UF {
             // Lazy approach
             int p_root = _getRoot(p); 
             int q_root = _getRoot(q);
+            int max = p_root > q_root ? p_root : q_root;
             // Weighted quick union
             if(sz[p_root] < sz[q_root]) {
                 connections[p_root] = q_root;
                 sz[q_root] += sz[p_root];
+                maxObj[q_root] = max;
             } else {
                 connections[q_root] = p_root;
                 sz[p_root] += sz[q_root];
+                maxObj[p_root] = max;
             }
+            numComponents -= 1;
         }
 
         void printConnectedComponents() {

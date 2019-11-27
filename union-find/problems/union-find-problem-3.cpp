@@ -5,4 +5,4 @@ Find the successor of x: the smallest y in S such that y≥x.
 design a data type so that all operations (except construction) take logarithmic time or better in the worst case.
 */
 
-#include "../union-find.h";
+#include "../union-find.h"
