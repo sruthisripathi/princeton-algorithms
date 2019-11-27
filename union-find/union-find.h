@@ -1,5 +1,4 @@
 #include<iostream>
-using namespace std;
 
 class UF {
     protected:
@@ -64,24 +63,20 @@ class UF {
         }
 
         void printConnectedComponents() {
-            cout << "Indices:" << endl;
+            std::cout << "Indices:" << std::endl;
             for (int i = 0; i < N; i++) {
-                cout << i << " ";
+                std::cout << i << " ";
             }
-            cout << endl;
-            cout << "Connections:" << endl;
+            std::cout << std::endl;
+            std::cout << "Connections:" << std::endl;
             for (int i = 0; i < N; i++) {
-                cout << connections[i] << " ";
+                std::cout << connections[i] << " ";
             }
-            cout << endl;
-            cout << "Sizes:" << endl;
+            std::cout << std::endl;
+            std::cout << "Sizes:" << std::endl;
             for (int i = 0; i < N; i++) {
-                cout << sz[i] << " ";
+                std::cout << sz[i] << " ";
             }
-            cout << endl;
-        }
-
-        bool isConnectedGraph() {
-
+            std::cout << std::endl;
         }
 };

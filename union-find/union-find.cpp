@@ -2,26 +2,26 @@
 
 int main() {
     int N;
-    cout << "Enter the number of objects" << endl;
-    cin >> N;
+    std::cout << "Enter the number of objects" << std::endl;
+    std::cin >> N;
     UF uf(N);
 
     int i = 0;
     int p, q;
-    cout << "Enter pairs of objects representing connections (Enter -1 when you are done)" << endl;
-    cout << "Enter conection: ";
-    while (cin >> p)
+    std::cout << "Enter pairs of objects representing connections (Enter -1 when you are done)" << std::endl;
+    std::cout << "Enter conection: ";
+    while (std::cin >> p)
     {
         if (p == -1) {
             break;
         }
-        cin >> q;
+        std::cin >> q;
         if (!uf.isConnectedQuickUnion(p, q)) {
             uf.quickUnion(p, q);
-            cout << "Formed connection: " << p << " <-> " << q << endl;
+            std::cout << "Formed connection: " << p << " <-> " << q << std::endl;
         }
         uf.printConnectedComponents();
-        cout << "Enter conection: ";
+        std::cout << "Enter conection: ";
     }
 
     uf.printConnectedComponents();
