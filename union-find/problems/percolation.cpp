@@ -43,6 +43,8 @@ int main() {
     p.printUF();
     std::cout << std::endl;
 
+    std::cout << "No of open sites: " << p.numberOfOpenSites() << std::endl;
+
     bool percolates = p.percolates();
     std::cout << "Percolates???" << "";
     if(percolates) {

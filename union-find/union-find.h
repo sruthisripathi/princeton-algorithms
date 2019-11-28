@@ -33,6 +33,12 @@ class UF {
             } 
         }
 
+        // ~UF() {
+        //     delete [] connections;
+        //     delete [] sz;
+        //     delete [] maxObj;
+        // }
+
         int findMax(int i) {
             int root = _getRoot(i);
             return maxObj[root];

@@ -26,31 +26,39 @@ class Percolation {
                 }
             }
             uf = UF((n*n)-(2*n)+2);
+            totalOpenSites=0;
+        }
+
+        ~Percolation() {
+            for (int i=0; i<N; i++) {
+                delete [] grid[i];
+            }
+            delete [] grid;
         }
 
         void open(int row, int col) {
             if(!isOpen(row, col)) {
                 int center = site(row, col);
-                std::cout << "Center site: " << center << std::endl;
+                // std::cout << "Center site: " << center << std::endl;
                 grid[row][col]=1;
                 if(row-1 >= 0 && grid[row-1][col]) {
                     int north = site(row-1, col);
-                    std::cout << "North site: " << north << std::endl;
+                    // std::cout << "North site: " << north << std::endl;
                     uf.quickUnion(center, north);
                 }
                 if(row+1 < N && grid[row+1][col]) {
                     int south = site(row+1, col);
-                    std::cout << "South site: " << south << std::endl;
+                    // std::cout << "South site: " << south << std::endl;
                     uf.quickUnion(south, center);
                 }
                 if(col-1 >= 0 && grid[row][col-1]) {
                     int west = site(row, col-1);
-                    std::cout << "West site: " << west << std::endl;
+                    // std::cout << "West site: " << west << std::endl;
                     uf.quickUnion(center, west);
                 }
                 if(col+1 < N &&grid[row][col+1]) {
                     int east = site(row, col+1);
-                    std::cout << "East site: " << east << std::endl;
+                    // std::cout << "East site: " << east << std::endl;
                     uf.quickUnion(east, center);
                 }
                 totalOpenSites += 1;
