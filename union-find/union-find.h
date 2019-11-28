@@ -18,6 +18,8 @@ class UF {
         }
 
     public:
+        UF() {}
+
         // Parametrized constructor
         UF(int n) {
             N = numComponents = n;
@@ -62,20 +64,22 @@ class UF {
 
         void quickUnion(int p, int q) {
             // Lazy approach
-            int p_root = _getRoot(p); 
-            int q_root = _getRoot(q);
-            int max = p_root > q_root ? p_root : q_root;
-            // Weighted quick union
-            if(sz[p_root] < sz[q_root]) {
-                connections[p_root] = q_root;
-                sz[q_root] += sz[p_root];
-                maxObj[q_root] = max;
-            } else {
-                connections[q_root] = p_root;
-                sz[p_root] += sz[q_root];
-                maxObj[p_root] = max;
+            if(!isConnected(p, q)) {
+                int p_root = _getRoot(p); 
+                int q_root = _getRoot(q);
+                int max = p_root > q_root ? p_root : q_root;
+                // Weighted quick union
+                if(sz[p_root] < sz[q_root]) {
+                    connections[p_root] = q_root;
+                    sz[q_root] += sz[p_root];
+                    maxObj[q_root] = max;
+                } else {
+                    connections[q_root] = p_root;
+                    sz[p_root] += sz[q_root];
+                    maxObj[p_root] = max;
+                }
+                numComponents -= 1;
             }
-            numComponents -= 1;
         }
 
         void printConnectedComponents() {
