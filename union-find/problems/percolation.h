@@ -70,7 +70,7 @@ class Percolation {
         }
 
         bool isFull(int row, int col) {
-            return uf.find(0, row*N+col);
+            return uf.find(0, site(row, col));
         }
 
         int numberOfOpenSites() {
